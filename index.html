@@ -16,10 +16,17 @@ body {
     font-family: Arial, sans-serif;
     overflow:hidden;
 
-    background: linear-gradient(135deg,#FFB6C1,#FFD1DC,#FDF8F5);
+    background: linear-gradient(270deg,#FFB6C1,#FFD1DC,#FDF8F5,#FFE4E1);
+    background-size:400% 400%;
+    animation: gradientMove 12s ease infinite;
 }
 
-/* CENTER CONTENT */
+@keyframes gradientMove {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+}
+
 .container {
     text-align:center;
     z-index:2;
@@ -28,28 +35,26 @@ body {
 
 /* HEART */
 .heart {
-    font-size:90px;
+    font-size:95px;
     cursor:pointer;
     animation: pulse 1.2s infinite;
 }
 
 @keyframes pulse {
     0% {transform: scale(1);}
-    50% {transform: scale(1.2);}
+    50% {transform: scale(1.25);}
     100% {transform: scale(1);}
 }
 
-.hidden {
-    display:none;
-}
+.hidden { display:none; }
 
-/* ROSE MESSAGE */
+/* MESSAGE ANIMATION */
 #roseMsg {
-    animation: fadeIn 1.5s ease forwards;
+    animation: fadeIn 1.3s ease forwards;
 }
 
 @keyframes fadeIn {
-    from {opacity:0; transform: translateY(20px);}
+    from {opacity:0; transform: translateY(25px);}
     to {opacity:1; transform: translateY(0);}
 }
 
@@ -58,7 +63,7 @@ body {
     position:fixed;
     font-size:26px;
     animation: floatUp linear infinite;
-    opacity:0.8;
+    opacity:0.9;
     pointer-events:none;
 }
 
@@ -67,7 +72,7 @@ body {
     to {transform: translateY(-10vh);}
 }
 
-/* POPUP CENTER FIX */
+/* POPUP */
 .popup {
     position:fixed;
     top:50%;
@@ -76,7 +81,7 @@ body {
     background:white;
     padding:30px 35px;
     border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    box-shadow:0 10px 35px rgba(0,0,0,0.2);
     text-align:center;
     animation: popIn 0.4s ease;
     width:85%;
@@ -89,8 +94,20 @@ body {
     to {transform: translate(-50%,-50%) scale(1); opacity:1;}
 }
 
-h1 { color:#FF4D6D; }
-h2 { color:#FF4D6D; }
+/* FINAL MESSAGE */
+.finalMessage {
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:28px;
+    color:#FF4D6D;
+    font-weight:bold;
+    animation: fadeIn 1s ease forwards;
+    z-index:6;
+}
+
+h1,h2 { color:#FF4D6D; }
 
 </style>
 </head>
@@ -116,6 +133,10 @@ h2 { color:#FF4D6D; }
     </p>
 </div>
 
+<div id="finalText" class="finalMessage hidden">
+    You just made my day ❤️
+</div>
+
 <script>
 
 let stage = 0;
@@ -132,18 +153,35 @@ document.body.addEventListener("click", function(){
         document.getElementById("proposal").classList.remove("hidden");
         stage++;
     }
+    else if(stage === 2){
+        document.getElementById("proposal").classList.add("hidden");
+        document.getElementById("finalText").classList.remove("hidden");
+        heartExplosion();
+        stage++;
+    }
 
 });
 
 function createFloatingItems(){
-    const items = ["🧸","❤️","💖","💕"];
+    const items = ["❤️","💖","💘","💝","💕","💓","🌹","🧸","✨"];
 
-    for(let i=0;i<20;i++){
+    for(let i=0;i<30;i++){
         let el = document.createElement("div");
         el.className = "floatItem";
         el.innerHTML = items[Math.floor(Math.random()*items.length)];
         el.style.left = Math.random()*100 + "vw";
-        el.style.animationDuration = (5 + Math.random()*5) + "s";
+        el.style.animationDuration = (4 + Math.random()*6) + "s";
+        document.body.appendChild(el);
+    }
+}
+
+function heartExplosion(){
+    for(let i=0;i<25;i++){
+        let el = document.createElement("div");
+        el.className = "floatItem";
+        el.innerHTML = "❤️";
+        el.style.left = Math.random()*100 + "vw";
+        el.style.animationDuration = "3s";
         document.body.appendChild(el);
     }
 }
