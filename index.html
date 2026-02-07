@@ -15,16 +15,27 @@ body {
     align-items:center;
     font-family: Arial, sans-serif;
     overflow:hidden;
-
-    background: linear-gradient(270deg,#FFB6C1,#FFD1DC,#FDF8F5,#FFE4E1);
-    background-size:400% 400%;
-    animation: gradientMove 12s ease infinite;
+    color:white;
 }
 
-@keyframes gradientMove {
-    0% {background-position:0% 50%;}
-    50% {background-position:100% 50%;}
-    100% {background-position:0% 50%;}
+/* BACKGROUND IMAGE */
+body::before {
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:url("photo1.jpg") center/cover no-repeat;
+    z-index:-2;
+}
+
+/* DARK OVERLAY FOR TEXT VISIBILITY */
+body::after {
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.35);
+    z-index:-1;
 }
 
 .container {
@@ -33,81 +44,52 @@ body {
     padding:20px;
 }
 
-/* HEART */
 .heart {
     font-size:95px;
     cursor:pointer;
-    animation: pulse 1.2s infinite;
+    animation:pulse 1.2s infinite;
 }
 
 @keyframes pulse {
-    0% {transform: scale(1);}
-    50% {transform: scale(1.25);}
-    100% {transform: scale(1);}
+    0%{transform:scale(1);}
+    50%{transform:scale(1.25);}
+    100%{transform:scale(1);}
 }
 
-.hidden { display:none; }
+.hidden{display:none;}
 
-/* MESSAGE ANIMATION */
 #roseMsg {
-    animation: fadeIn 1.3s ease forwards;
+    animation:fadeIn 1s ease forwards;
 }
 
 @keyframes fadeIn {
-    from {opacity:0; transform: translateY(25px);}
-    to {opacity:1; transform: translateY(0);}
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
 }
 
-/* FLOATING ITEMS */
-.floatItem {
-    position:fixed;
-    font-size:26px;
-    animation: floatUp linear infinite;
-    opacity:0.9;
-    pointer-events:none;
-}
-
-@keyframes floatUp {
-    from {transform: translateY(100vh);}
-    to {transform: translateY(-10vh);}
-}
-
-/* POPUP */
 .popup {
     position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
     background:white;
-    padding:30px 35px;
+    color:#FF4D6D;
+    padding:30px;
     border-radius:20px;
-    box-shadow:0 10px 35px rgba(0,0,0,0.2);
     text-align:center;
-    animation: popIn 0.4s ease;
     width:85%;
     max-width:350px;
-    z-index:5;
 }
 
-@keyframes popIn {
-    from {transform: translate(-50%,-50%) scale(0.7); opacity:0;}
-    to {transform: translate(-50%,-50%) scale(1); opacity:1;}
-}
-
-/* FINAL MESSAGE */
 .finalMessage {
     position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    font-size:28px;
-    color:#FF4D6D;
+    font-size:30px;
     font-weight:bold;
-    animation: fadeIn 1s ease forwards;
-    z-index:6;
+    text-align:center;
 }
-
-h1,h2 { color:#FF4D6D; }
 
 </style>
 </head>
@@ -121,20 +103,18 @@ h1,h2 { color:#FF4D6D; }
     <div id="roseMsg" class="hidden">
         <h1>🌹 Happy Rose Day 🌹</h1>
         <p>For you Sanskruti ❤️</p>
-        <p style="font-size:18px;">You make every day beautiful 😊</p>
+        <p>You make every day beautiful</p>
     </div>
 
 </div>
 
 <div id="proposal" class="popup hidden">
     <h2>Can you be my Valentine, Sanskruti? ❤️</h2>
-    <p style="margin-top:10px;">
-        I will get you your favourite sushi 🍣❤️
-    </p>
+    <p>I will get you your favourite sushi 🍣❤️</p>
 </div>
 
 <div id="finalText" class="finalMessage hidden">
-    You just made my day ❤️
+    You just made my life ❤️
 </div>
 
 <script>
@@ -144,47 +124,22 @@ let stage = 0;
 document.body.addEventListener("click", function(){
 
     if(stage === 0){
-        document.getElementById("heart").classList.add("hidden");
-        document.getElementById("roseMsg").classList.remove("hidden");
-        createFloatingItems();
+        heart.classList.add("hidden");
+        roseMsg.classList.remove("hidden");
         stage++;
     }
     else if(stage === 1){
-        document.getElementById("proposal").classList.remove("hidden");
+        proposal.classList.remove("hidden");
         stage++;
     }
     else if(stage === 2){
-        document.getElementById("proposal").classList.add("hidden");
-        document.getElementById("finalText").classList.remove("hidden");
-        heartExplosion();
+        proposal.classList.add("hidden");
+        roseMsg.classList.add("hidden");
+        finalText.classList.remove("hidden");
         stage++;
     }
 
 });
-
-function createFloatingItems(){
-    const items = ["❤️","💖","💘","💝","💕","💓","🌹","🧸","✨"];
-
-    for(let i=0;i<30;i++){
-        let el = document.createElement("div");
-        el.className = "floatItem";
-        el.innerHTML = items[Math.floor(Math.random()*items.length)];
-        el.style.left = Math.random()*100 + "vw";
-        el.style.animationDuration = (4 + Math.random()*6) + "s";
-        document.body.appendChild(el);
-    }
-}
-
-function heartExplosion(){
-    for(let i=0;i<25;i++){
-        let el = document.createElement("div");
-        el.className = "floatItem";
-        el.innerHTML = "❤️";
-        el.style.left = Math.random()*100 + "vw";
-        el.style.animationDuration = "3s";
-        document.body.appendChild(el);
-    }
-}
 
 </script>
 
