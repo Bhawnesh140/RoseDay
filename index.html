@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Rose Day ❤️</title>
+
+<style>
+body {
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#FDF8F5;
+    font-family: Arial, sans-serif;
+    overflow:hidden;
+}
+
+/* Center box */
+.container {
+    text-align:center;
+}
+
+/* Heart */
+.heart {
+    font-size:80px;
+    cursor:pointer;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.2);}
+    100% {transform: scale(1);}
+}
+
+/* Hidden elements */
+.hidden {
+    display:none;
+}
+
+/* Floating teddy */
+.teddy {
+    position:absolute;
+    width:60px;
+    animation: float 10s linear infinite;
+    opacity:0.7;
+}
+
+@keyframes float {
+    from {transform: translateY(100vh);}
+    to {transform: translateY(-10vh);}
+}
+
+/* Popup */
+.popup {
+    position:fixed;
+    background:white;
+    padding:25px 35px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Heart -->
+    <div id="heart" class="heart">❤️</div>
+
+    <!-- Rose Message -->
+    <div id="roseMsg" class="hidden">
+        <h1>🌹 Happy Rose Day 🌹</h1>
+        <p>For you Sanskruti ❤️</p>
+    </div>
+
+</div>
+
+<!-- Proposal Popup -->
+<div id="proposal" class="popup hidden">
+    <h2>Can you become my Valentine, Sanskruti? ❤️</h2>
+    <p style="margin-top:10px; font-size:16px;">
+        I will get you your favourite sushi 🍣❤️
+    </p>
+</div>
+
+<script>
+
+let stage = 0;
+
+document.body.addEventListener("click", function(){
+
+    if(stage === 0){
+        document.getElementById("heart").classList.add("hidden");
+        document.getElementById("roseMsg").classList.remove("hidden");
+        createTeddies();
+        stage++;
+    }
+    else if(stage === 1){
+        document.getElementById("proposal").classList.remove("hidden");
+        stage++;
+    }
+
+});
+
+function createTeddies(){
+    for(let i=0;i<10;i++){
+        let teddy = document.createElement("img");
+        teddy.src = "https://i.imgur.com/8QfQK8M.png";
+        teddy.className = "teddy";
+        teddy.style.left = Math.random()*100 + "vw";
+        teddy.style.animationDuration = (5 + Math.random()*5) + "s";
+        document.body.appendChild(teddy);
+    }
+}
+
+</script>
+
+</body>
+</html>
